@@ -1,0 +1,29 @@
+{% block sw_cms_element_prototype_config %}
+	<div
+		class="sw-cms-el-config-prototype">
+		<!-- Text Content Field -->
+		<sw-textarea-field v-model="textAreaContent" label="Text Area" placeholder="Enter additional information..." @update:value="value => onElementUpdate(value, 'textAreaContent')"></sw-textarea-field>
+	</div>
+
+	<sw-cms-mapping-field v-model:config="element.config.media" :label="$tc('sw-cms.elements.image.label')" value-types="entity" entity="media">
+		<sw-media-upload-v2 variant="regular" :upload-tag="uploadTag" :source="previewSource" :allow-multi-select="false" :default-folder="cmsPageState.pageEntityName" :caption="$tc('sw-cms.elements.general.config.caption.mediaUpload')" @media-upload-sidebar-open="onOpenMediaModal" @media-upload-remove-image="onImageRemove"/>
+
+		<template #preview="{ demoValue }">
+			<div class="sw-cms-el-config-image__mapping-preview">
+				<img v-if="demoValue.url" :src="demoValue.url" alt="">
+				<sw-alert v-else class="sw-cms-el-config-image__preview-info" variant="info">
+					{{ $tc('sw-cms.detail.label.mappingEmptyPreview') }}
+				</sw-alert>
+			</div>
+		</template>
+	</sw-cms-mapping-field>
+
+	<sw-upload-listener :upload-tag="uploadTag" auto-upload @media-upload-finish="onImageUpload"/>
+
+	<sw-media-modal-v2 v-if="mediaModalIsOpen" variant="full" :caption="$tc('sw-cms.elements.general.config.caption.mediaUpload')" :entity-context="cmsPageState.entityName" :allow-multi-select="false" :initial-folder-id="cmsPageState.defaultMediaFolderId" @media-upload-remove-image="onImageRemove" @media-modal-selection-change="onSelectionChanges" @modal-close="onCloseModal"/>
+
+	<sw-single-select v-model:value="element.config.position.value" :options="[
+				        { value: 'image-left', label: 'Image Left' },
+				        { value: 'image-right', label: 'Image Right' }
+				    ]" :label="$tc('sw-cms-el-config-prototype.position.label')" :placeholder="$tc('sw-cms-el-config-prototype.position.placeholder')"/>
+{% endblock %}

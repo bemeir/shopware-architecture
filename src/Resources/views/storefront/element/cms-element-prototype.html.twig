@@ -1,0 +1,30 @@
+{% block element_prototype %}
+	{% set element = block.slots.getSlot('proto') %}
+	{% set mediaCollection = searchMedia([element.config.media.value], context.context) %}
+	{% set image = mediaCollection.get(element.config.media.value) %}
+
+	<div class="cms-element-prototype d-flex flex-wrap align-items-center flex-column flex-md-row">
+		{% block element_prototype_inner %}
+			<!-- Text Block -->
+			<div class="cms-el-prototype__text col-12 col-md-6 text-center p-4 {% if element.config.position.value == 'image-right' %}order-1{% else %}order-2{% endif %}">
+				<div>
+					{{ element.config.textAreaContent.value }}
+				</div>
+			</div>
+
+			<!-- Image Block -->
+			<div class="cms-el-prototype__image col-12 col-md-6 d-flex justify-content-center p-4 {% if element.config.position.value == 'image-right' %}order-2{% else %}order-1{% endif %}">
+				{% if image %}
+					{% sw_thumbnails 'banner-media' with {
+                        media: image,
+                        attributes: {
+                            class: 'media-desktop img-fluid rounded',
+                            loading: 'lazy',
+                            alt: 'banner'
+                        }
+                    } %}
+				{% endif %}
+			</div>
+		{% endblock %}
+	</div>
+{% endblock %}

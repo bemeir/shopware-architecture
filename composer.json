@@ -1,0 +1,27 @@
+{
+    "name": "c-m-s-blocks/c-m-s-blocks",
+    "description": "c-m-s-blocks/c-m-s-blocks",
+    "type": "shopware-platform-plugin",
+    "version": "1.0.0",
+    "license": "MIT",
+    "require": {
+        "shopware/core": "~6.6.0"
+    },
+    "extra": {
+        "shopware-plugin-class": "CMSBlocks\\CMSBlocks",
+        "label": {
+            "de-DE": "Skeleton plugin",
+            "en-GB": "Skeleton plugin"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "CMSBlocks\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CMSBlocks\\Tests\\": "tests/"
+        }
+    }
+}
